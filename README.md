@@ -43,9 +43,7 @@ The app builds and validates the workbook. Click **Open workbook** when it finis
 
 ## Use the command line
 
-For most tasks, use the GUI.
-
-Most users should use the GUI. Use the CLI for troubleshooting or repeatable runs.
+For most tasks, use the GUI. Use the CLI for troubleshooting or repeatable runs.
 
 Run this command from the extracted app folder:
 
