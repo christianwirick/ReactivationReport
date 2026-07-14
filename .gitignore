@@ -1,0 +1,21 @@
+.DS_Store
+**/.DS_Store
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+dist/
+*.bundle
+*.log
+*.tmp
+outputs/
+
+# Internal project documentation
+AGENTS.md
+ARCHITECTURE.md
+CHANGELOG.md
+backlog.md
+release.md
