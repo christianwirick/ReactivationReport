@@ -104,7 +104,7 @@ REACTIVATION_SUMMARY_COLUMN_WIDTHS = {
     "H": 18,
 }
 
-SUMMARY_TITLE_FONT = "Arial"
+SUMMARY_TITLE_FONT = "Trade Gothic Next Cond"
 
 
 def summary_date_label(report_date: date) -> str:

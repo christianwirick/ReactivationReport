@@ -40,6 +40,9 @@ GRADIENT = [PURPLE, PURPLE_LIGHT, BLUE, TEAL]
 
 # Prefer first installed font in each list.
 HEADING_FONT_PREFS = [
+    "Trade Gothic Next Cond",
+    "Trade Gothic Next Condensed",
+    "Trade Gothic Next",
     "Oswald",
     "Segoe UI Semibold",
     "Segoe UI",
