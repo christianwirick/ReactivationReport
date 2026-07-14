@@ -1,6 +1,6 @@
-# Hosted Players Report
+# Reactivation Report
 
-Identify players who have fallen below their normal play patterns. Create the weekly reactivation report from Tableau exports.
+Identify hosted players who have fallen below their normal play patterns. 
 
 ## Requirements
 
