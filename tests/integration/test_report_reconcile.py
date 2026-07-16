@@ -34,6 +34,24 @@ class ReconciliationTests(unittest.TestCase):
         self._assert_reconciliation_failure_preserves_previous(
             lambda workbook: workbook["Copy"].delete_rows(2),
             "Copy sheet UID count mismatch",
+            include_copy_sheet=True,
+        )
+
+    def test_missing_requested_copy_sheet_blocks_publish_and_preserves_previous_final(self) -> None:
+        self._assert_reconciliation_failure_preserves_previous(
+            lambda workbook: workbook.remove(workbook["Copy"]),
+            "Hidden Copy sheet is missing",
+            include_copy_sheet=True,
+        )
+
+    def test_visible_requested_copy_sheet_blocks_publish_and_preserves_previous_final(self) -> None:
+        def make_copy_visible(workbook: Workbook) -> None:
+            workbook["Copy"].sheet_state = "visible"
+
+        self._assert_reconciliation_failure_preserves_previous(
+            make_copy_visible,
+            "Copy sheet must remain hidden",
+            include_copy_sheet=True,
         )
 
     def test_summary_grand_total_guest_mismatch_blocks_publish_and_preserves_previous_final(self) -> None:
@@ -203,6 +221,8 @@ class ReconciliationTests(unittest.TestCase):
         self,
         mutate: Callable[[Workbook], None],
         message: str,
+        *,
+        include_copy_sheet: bool = False,
     ) -> None:
         with TemporaryDirectory() as temp:
             root = Path(temp)
@@ -232,6 +252,7 @@ class ReconciliationTests(unittest.TestCase):
                     report_date=date(2026, 6, 1),
                     output_folder=root,
                     create_native_pivot=False,
+                    include_copy_sheet=include_copy_sheet,
                     overwrite=True,
                 )
 

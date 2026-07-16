@@ -16,7 +16,6 @@ class Settings(TypedDict):
     """Persisted desktop preferences."""
 
     output_folder: str
-    create_pivot: bool
     last_hosted_dir: str
     last_lastweek_dir: str
     last_reactivated_dir: str
@@ -24,7 +23,6 @@ class Settings(TypedDict):
 
 DEFAULT_SETTINGS: Settings = {
     "output_folder": "",
-    "create_pivot": True,
     "last_hosted_dir": "",
     "last_lastweek_dir": "",
     "last_reactivated_dir": "",
@@ -93,13 +91,11 @@ def _validated_settings(value: object) -> Settings:
         return DEFAULT_SETTINGS.copy()
 
     output_folder = value.get("output_folder")
-    create_pivot = value.get("create_pivot")
     last_hosted_dir = value.get("last_hosted_dir")
     last_lastweek_dir = value.get("last_lastweek_dir")
     last_reactivated_dir = value.get("last_reactivated_dir")
     return {
         "output_folder": output_folder if isinstance(output_folder, str) else DEFAULT_SETTINGS["output_folder"],
-        "create_pivot": create_pivot if isinstance(create_pivot, bool) else DEFAULT_SETTINGS["create_pivot"],
         "last_hosted_dir": (
             last_hosted_dir if isinstance(last_hosted_dir, str) else DEFAULT_SETTINGS["last_hosted_dir"]
         ),

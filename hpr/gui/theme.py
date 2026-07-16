@@ -16,6 +16,7 @@ STEP_ACTIVE = "#6A39BE"
 STEP_IDLE = "#555565"
 
 BG = "#1C1A31"
+SUCCESS_BANNER_DARK = "#12091F"
 CARD = "#262340"
 CARD_HOVER = "#2F2B4E"
 SUNK = "#201D38"
@@ -35,6 +36,8 @@ FOCUS = "#D6C4FF"
 INFO_BG = "#1E2C45"
 SUCCESS_BG = "#1D333B"
 DANGER_BG = "#3D2036"
+SETTINGS_BG = "#2D2E36"
+SETTINGS_CARD = "#373842"
 
 GRADIENT = [PURPLE, PURPLE_LIGHT, BLUE, TEAL]
 
@@ -86,17 +89,22 @@ def apply_styles(root: tk.Tk) -> GuiFonts:
 
     style.configure(".", background=BG, foreground=TEXT, bordercolor=BORDER, font=fonts.body)
     style.configure("TFrame", background=BG)
+    style.configure("Card.TFrame", background=CARD)
+    style.configure("Settings.TFrame", background=SETTINGS_BG)
     style.configure("TLabel", background=BG, foreground=TEXT, font=fonts.body)
     style.configure("Muted.TLabel", background=BG, foreground=MUTED, font=fonts.body)
     style.configure("Small.TLabel", background=BG, foreground=MUTED, font=fonts.small)
-    style.configure("Strong.TLabel", background=BG, foreground=TEXT, font=fonts.body_bold)
     style.configure("Heading.TLabel", background=BG, foreground=TEXT, font=fonts.heading)
-    style.configure("Success.TLabel", background=BG, foreground=TEAL, font=fonts.heading)
-    style.configure("Error.TLabel", background=BG, foreground=RED, font=fonts.heading)
     style.configure("Caption.TLabel", background=BG, foreground=MUTED, font=fonts.small)
+    style.configure("CardHeading.TLabel", background=CARD, foreground=TEXT, font=fonts.heading)
+    style.configure("Card.TLabel", background=CARD, foreground=TEXT, font=fonts.body)
+    style.configure("CardStrong.TLabel", background=CARD, foreground=TEXT, font=fonts.body_bold)
+    style.configure("CardMuted.TLabel", background=CARD, foreground=MUTED, font=fonts.body)
+    style.configure("SettingsMuted.TLabel", background=SETTINGS_BG, foreground=MUTED, font=fonts.body)
+    style.configure("SettingsSmall.TLabel", background=SETTINGS_BG, foreground=MUTED, font=fonts.small)
+    style.configure("SettingsHeading.TLabel", background=SETTINGS_BG, foreground=TEXT, font=fonts.heading)
+    style.configure("SettingsCard.TLabel", background=SETTINGS_CARD, foreground=TEXT, font=fonts.body)
 
-    style.configure("SuccessCard.TLabel", background=SUCCESS_BG, foreground=TEXT, font=fonts.body)
-    style.configure("SuccessCardMuted.TLabel", background=SUCCESS_BG, foreground=MUTED, font=fonts.body)
     style.configure("SuccessCardHeading.TLabel", background=SUCCESS_BG, foreground=TEXT, font=fonts.heading)
     style.configure("InfoCardMuted.TLabel", background=INFO_BG, foreground=MUTED, font=fonts.body)
     style.configure("InfoCardHeading.TLabel", background=INFO_BG, foreground=TEXT, font=fonts.heading)
@@ -105,46 +113,19 @@ def apply_styles(root: tk.Tk) -> GuiFonts:
 
     style.configure("Header.TFrame", background=HEADER_BG)
     style.configure("Title.TLabel", background=HEADER_BG, foreground=HEADER_TITLE, font=fonts.title)
-    style.configure("Divider.TFrame", background=DIVIDER)
-
     style.configure(
-        "TEntry",
-        fieldbackground=CARD,
+        "SettingsCard.TCheckbutton",
+        background=SETTINGS_CARD,
         foreground=TEXT,
-        bordercolor=BORDER,
-        insertcolor=TEXT,
-        padding=8,
+        focuscolor=SETTINGS_CARD,
+        font=fonts.body,
     )
     style.map(
-        "TEntry",
-        fieldbackground=[("readonly", CARD)],
-        foreground=[("readonly", TEXT)],
-        bordercolor=[("focus", PURPLE)],
-    )
-
-    style.configure("TCheckbutton", background=BG, foreground=TEXT, focuscolor=BG, font=fonts.body)
-    style.map(
-        "TCheckbutton",
-        background=[("active", BG)],
+        "SettingsCard.TCheckbutton",
+        background=[("active", SETTINGS_CARD)],
         indicatorcolor=[("selected", PURPLE), ("!selected", CARD)],
     )
 
-    style.configure(
-        "Link.TButton",
-        background=BG,
-        foreground=MUTED,
-        bordercolor=BG,
-        focuscolor=PURPLE_LIGHT,
-        borderwidth=0,
-        relief="flat",
-        font=fonts.body_bold,
-        padding=(0, 6),
-    )
-    style.map(
-        "Link.TButton",
-        background=[("active", BG), ("pressed", BG)],
-        foreground=[("active", TEXT), ("pressed", TEXT)],
-    )
     return fonts
 
 

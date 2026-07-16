@@ -1,8 +1,12 @@
 from __future__ import annotations
 
 import io
+import subprocess
+import sys
 import unittest
 from contextlib import redirect_stdout
+from pathlib import Path
+from tempfile import TemporaryDirectory
 from unittest.mock import patch
 
 import cli
@@ -47,6 +51,20 @@ class VersionTests(unittest.TestCase):
 
     def test_release_builder_uses_package_version(self) -> None:
         self.assertEqual(build_release.read_version(), __version__)
+
+    def test_release_builder_loads_outside_repository(self) -> None:
+        script_path = Path(build_release.__file__).resolve()
+        probe = "import runpy, sys; runpy.run_path(sys.argv[1], run_name='release_builder_probe')"
+        with TemporaryDirectory() as temp:
+            completed = subprocess.run(
+                [sys.executable, "-c", probe, str(script_path)],
+                cwd=temp,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+
+        self.assertEqual(completed.returncode, 0, completed.stderr)
 
 
 if __name__ == "__main__":

@@ -146,6 +146,7 @@ def run_report(
     overwrite: bool = False,
     create_native_pivot: bool = True,
     require_native_pivot: bool = False,
+    include_copy_sheet: bool = False,
     progress_callback: ProgressCallback | None = None,
 ) -> ReportResult:
     """Build and publish the complete report workbook."""
@@ -201,7 +202,8 @@ def run_report(
                 report_date=resolved_report_date,
                 reactivated_rows=reactivated_rows,
             )
-        _add_copy_sheet(workbook, missing)
+        if include_copy_sheet:
+            _add_copy_sheet(workbook, missing)
         _force_formula_recalculation(workbook)
 
         try:
@@ -221,6 +223,7 @@ def run_report(
             hosted_rows=hosted_rows,
             reactivated_rows=reactivated_rows if reactivated_csv_path else None,
             comparison=comparison,
+            include_copy_sheet=include_copy_sheet,
         )
 
         if create_native_pivot:

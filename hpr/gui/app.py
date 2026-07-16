@@ -20,7 +20,7 @@ from hpr.clipboard import copy_text_to_clipboard
 from hpr.errors import HostedPlayersReportError, InputValidationError, MarketInferenceError, WorkbookLockedError
 from hpr.gui import text
 from hpr.gui.run_jobs import AsyncRunner, ProgressController
-from hpr.gui.screens import Screens
+from hpr.gui.screens import FILE_CHIP_GRADIENT_RANGES, FILE_CONNECTOR_GRADIENT_RANGE, Screens
 from hpr.gui.state import GuiState, HandoffWorkResult
 from hpr.gui.theme import (
     BG,
@@ -36,7 +36,7 @@ from hpr.gui.theme import (
     WHITE,
     apply_styles,
 )
-from hpr.gui.widgets import RoundedButton, RoundedProgressBar, Stepper, scroll_needed
+from hpr.gui.widgets import ButtonIcon, RoundedButton, RoundedProgressBar, StepNumberChip, Stepper, scroll_needed
 from hpr.logs import configure_logging, install_excepthooks
 from hpr.read_tableau import read_reactivated_players_csv
 from hpr.report.run import ReportResult, parse_report_date, run_report, run_uid_handoff
@@ -53,6 +53,7 @@ MAX_BUILD_ATTEMPTS = 3
 PROGRESS_TICK_MS = 33
 PROGRESS_STEP = 2.0
 PROGRESS_FINISH_STEP = 12.0
+FILE_CHIP_SUCCESS_MS = 600
 
 
 def open_in_os(path: Path) -> None:
@@ -86,8 +87,8 @@ class HostedPlayersReportApp(Screens, tk.Tk):
 
     def __init__(self) -> None:
         super().__init__()
-        self.title(f"{APP_TITLE}  v{APP_VERSION}")
-        self.minsize(820, 540)
+        self.title(text.window_title(APP_VERSION))
+        self.minsize(820, 580)
 
         self.log_session = configure_logging()
         self.log = self.log_session.logger
@@ -104,13 +105,15 @@ class HostedPlayersReportApp(Screens, tk.Tk):
         self.lastweek_var = tk.StringVar()
         self.outdir_var = tk.StringVar(value=self._settings["output_folder"])
         self.date_var = tk.StringVar(value=date.today().isoformat())
-        self.native_pivot_var = tk.BooleanVar(value=self._settings["create_pivot"])
+        self.qa_var = tk.BooleanVar(value=False)
 
         self.data = GuiState()
         self.theme_path: Path = default_theme_path()
-        self._options_open = False
-        self._options_toggle: ttk.Button | None = None
         self._handoff_buttons: list[RoundedButton] = []
+        self._file_chips: list[StepNumberChip] = []
+        self._file_rows: list[tuple[ttk.Label, ttk.Label]] = []
+        self._file_chips_gradient = False
+        self._file_chip_transition_after: str | None = None
         self._primary_action: Callable[[], None] | None = None
         self._back_action: Callable[[], None] | None = None
         self.async_runner: AsyncRunner | None = None
@@ -118,7 +121,6 @@ class HostedPlayersReportApp(Screens, tk.Tk):
         self._stage_queue: queue.Queue[str] | None = None
 
         fonts = apply_styles(self)
-        self.font_title = fonts.title
         self.font_heading = fonts.heading
         self.font_body = fonts.body
         self.font_body_bold = fonts.body_bold
@@ -134,7 +136,7 @@ class HostedPlayersReportApp(Screens, tk.Tk):
         """Center the window near the top of the display."""
 
         self.update_idletasks()
-        width, height = 860, 660
+        width, height = 860, 600
         x = max(0, (self.winfo_screenwidth() - width) // 2)
         y = max(0, (self.winfo_screenheight() - height) // 3)
         self.geometry(f"{width}x{height}+{x}+{y}")
@@ -160,6 +162,7 @@ class HostedPlayersReportApp(Screens, tk.Tk):
     def destroy(self) -> None:
         """Release global bindings and close the window."""
 
+        self._cancel_file_chip_transition()
         if self.progress_controller is not None:
             self.progress_controller.set_busy(False)
         for sequence in ("<MouseWheel>", "<Button-4>", "<Button-5>"):
@@ -195,7 +198,6 @@ class HostedPlayersReportApp(Screens, tk.Tk):
     def _persist_settings(self) -> None:
 
         self._settings["output_folder"] = self.outdir_var.get().strip()
-        self._settings["create_pivot"] = bool(self.native_pivot_var.get())
         save_settings(self._settings)
 
     def report_callback_exception(
@@ -218,6 +220,7 @@ class HostedPlayersReportApp(Screens, tk.Tk):
         text_value: str,
         command: Callable[[], None],
         *,
+        parent_bg: str = BG,
         min_width: int = 0,
     ) -> RoundedButton:
         """Create primary action button."""
@@ -226,7 +229,7 @@ class HostedPlayersReportApp(Screens, tk.Tk):
             parent,
             text_value,
             command,
-            parent_bg=BG,
+            parent_bg=parent_bg,
             fill=PURPLE,
             fill_hover=PURPLE_LIGHT,
             fill_press=PURPLE_PRESS,
@@ -240,6 +243,17 @@ class HostedPlayersReportApp(Screens, tk.Tk):
         parent: tk.Misc,
         text_value: str,
         command: Callable[[], None],
+        *,
+        parent_bg: str = BG,
+        border_color: str | None = None,
+        min_width: int = 0,
+        min_height: int = 0,
+        pad_x: int = 20,
+        pad_y: int = 11,
+        fill: str = CARD,
+        fill_hover: str = CARD_HOVER,
+        fill_press: str = SUNK,
+        icon: ButtonIcon | None = None,
     ) -> RoundedButton:
         """Secondary action button."""
 
@@ -247,12 +261,18 @@ class HostedPlayersReportApp(Screens, tk.Tk):
             parent,
             text_value,
             command,
-            parent_bg=BG,
-            fill=CARD,
-            fill_hover=CARD_HOVER,
-            fill_press=SUNK,
+            parent_bg=parent_bg,
+            fill=fill,
+            fill_hover=fill_hover,
+            fill_press=fill_press,
             text_color=TEXT,
             font=self.font_body_bold,
+            pad_x=pad_x,
+            pad_y=pad_y,
+            border_color=border_color,
+            min_width=min_width,
+            min_height=min_height,
+            icon=icon,
         )
 
     def _build_chrome(self) -> None:
@@ -292,7 +312,7 @@ class HostedPlayersReportApp(Screens, tk.Tk):
         self.content_canvas.grid(row=0, column=0, sticky="nsew")
         self.content_scrollbar.grid(row=0, column=1, sticky="ns")
 
-        self.content = ttk.Frame(self.content_canvas, padding=(28, 26, 28, 16))
+        self.content = ttk.Frame(self.content_canvas, padding=(28, 20, 28, 16))
         self._content_window = self.content_canvas.create_window((0, 0), window=self.content, anchor="nw")
         self.content.bind("<Configure>", self._sync_content_scrollregion)
         self.content_canvas.bind("<Configure>", self._sync_content_width)
@@ -300,13 +320,14 @@ class HostedPlayersReportApp(Screens, tk.Tk):
         self.bind_all("<Button-4>", self._on_mousewheel)
         self.bind_all("<Button-5>", self._on_mousewheel)
 
-        footer = ttk.Frame(self, padding=(28, 12, 28, 20))
-        footer.pack(fill="x", side="bottom")
+        self.footer = ttk.Frame(self, padding=(28, 8, 28, 12))
+        self.footer.pack(fill="x", side="bottom")
         self.status_var = tk.StringVar(value="")
-        ttk.Label(footer, textvariable=self.status_var, style="Small.TLabel").pack(side="left")
-        self.progress = RoundedProgressBar(footer, width=260, height=12)
+        self.status_label = ttk.Label(self.footer, textvariable=self.status_var, style="Small.TLabel")
+        self.status_label.pack(side="left")
+        self.progress = RoundedProgressBar(self.footer, width=260, height=12)
         self.progress_pct_var = tk.StringVar(value="")
-        self.progress_label = ttk.Label(footer, textvariable=self.progress_pct_var, style="Small.TLabel")
+        self.progress_label = ttk.Label(self.footer, textvariable=self.progress_pct_var, style="Small.TLabel")
         self.async_runner = AsyncRunner(self)
         self.progress_controller = ProgressController(
             self,
@@ -320,8 +341,15 @@ class HostedPlayersReportApp(Screens, tk.Tk):
         )
 
     def _begin_step(self, number: int) -> None:
+        self._cancel_file_chip_transition()
         self.stepper.set_step(number)
         self.set_busy(False)
+        self.content_shell.configure(style="TFrame")
+        self.content_canvas.configure(bg=BG)
+        self.content.configure(style="TFrame")
+        self.footer.configure(style="TFrame")
+        self.status_label.configure(style="Small.TLabel")
+        self.progress_label.configure(style="Small.TLabel")
         self._primary_action = None
         self._back_action = None
         for child in self.content.winfo_children():
@@ -329,6 +357,39 @@ class HostedPlayersReportApp(Screens, tk.Tk):
         for column in range(3):
             self.content.columnconfigure(column, weight=0)
         self.content_canvas.yview_moveto(0)
+
+    def _cancel_file_chip_transition(self) -> None:
+        if self._file_chip_transition_after is None:
+            return
+        try:
+            self.after_cancel(self._file_chip_transition_after)
+        except tk.TclError:
+            pass
+        self._file_chip_transition_after = None
+
+    def _schedule_file_chip_gradient(self) -> None:
+        self._cancel_file_chip_transition()
+        files_selected = bool(self.hosted_var.get().strip() and self.lastweek_var.get().strip())
+        if self._file_chips_gradient or not files_selected:
+            return
+        self._file_chip_transition_after = self.after(FILE_CHIP_SUCCESS_MS, self._apply_file_chip_gradient)
+
+    def _apply_file_chip_gradient(self) -> None:
+        self._file_chip_transition_after = None
+        files_selected = bool(self.hosted_var.get().strip() and self.lastweek_var.get().strip())
+        if not files_selected:
+            return
+        if len(self._file_chips) != len(FILE_CHIP_GRADIENT_RANGES):
+            return
+        self._file_chips_gradient = True
+        try:
+            for chip, gradient_range in zip(self._file_chips, FILE_CHIP_GRADIENT_RANGES, strict=True):
+                if chip.winfo_exists():
+                    chip.set_vertical_gradient(*gradient_range)
+            if self._file_connector.winfo_exists():
+                self._file_connector.set_vertical_gradient(*FILE_CONNECTOR_GRADIENT_RANGE)
+        except tk.TclError:
+            return
 
     def _sync_content_scrollregion(self, _event: tk.Event[ttk.Frame] | None = None) -> None:
         bounds = self.content_canvas.bbox("all")
@@ -365,7 +426,18 @@ class HostedPlayersReportApp(Screens, tk.Tk):
         """Finish progress animation, then run callback."""
 
         assert self.progress_controller is not None
-        self.progress_controller.finish(on_complete)
+
+        def complete() -> None:
+            self._stop_progress()
+            on_complete()
+
+        self.progress_controller.finish(complete)
+
+    def _stop_progress(self) -> None:
+        """Stop progress and discard stage messages from the completed job."""
+
+        self._stage_queue = None
+        self.set_busy(False)
 
     def _progress_callback(self) -> Callable[[str], None]:
         self._stage_queue = queue.Queue()
@@ -394,7 +466,7 @@ class HostedPlayersReportApp(Screens, tk.Tk):
     def _browse_hosted(self) -> None:
         path = filedialog.askopenfilename(
             title=text.HOSTED_DIALOG,
-            filetypes=[("CSV files", "*.csv"), ("All files", "*.*")],
+            filetypes=[(text.CSV_FILES_LABEL, "*.csv"), (text.ALL_FILES_LABEL, "*.*")],
             initialdir=self._settings["last_hosted_dir"] or None,
         )
         if not path:
@@ -404,17 +476,19 @@ class HostedPlayersReportApp(Screens, tk.Tk):
         if not self.outdir_var.get().strip():
             self.outdir_var.set(str(Path(path).parent / "outputs"))
         self._persist_settings()
+        self._refresh_file_rows()
 
     def _browse_lastweek(self) -> None:
         path = filedialog.askopenfilename(
             title=text.PRIOR_DIALOG,
-            filetypes=[("Excel workbooks", "*.xlsx"), ("All files", "*.*")],
+            filetypes=[(text.EXCEL_WORKBOOKS_LABEL, "*.xlsx"), (text.ALL_FILES_LABEL, "*.*")],
             initialdir=self._settings["last_lastweek_dir"] or None,
         )
         if path:
             self.lastweek_var.set(path)
             self._settings["last_lastweek_dir"] = str(Path(path).parent)
             self._persist_settings()
+            self._refresh_file_rows()
 
     def _browse_outdir(self) -> None:
         path = filedialog.askdirectory(
@@ -456,8 +530,6 @@ class HostedPlayersReportApp(Screens, tk.Tk):
         self._run_handoff()
 
     def _run_handoff(self) -> None:
-        if self._options_open:
-            self._toggle_options()
         self._set_handoff_controls(False)
         self.set_busy(True, text.HANDOFF_BUSY)
         progress_callback = self._progress_callback()
@@ -502,14 +574,12 @@ class HostedPlayersReportApp(Screens, tk.Tk):
         )
         if result.clipboard is not None:
             self.data.clipboard_ok = result.clipboard.copied
-            self.data.clipboard_message = result.clipboard.message
         else:
             self.data.clipboard_ok = False
-            self.data.clipboard_message = text.NO_MISSING_UIDS
         self.finish_progress(self.render_clipboard)
 
     def _handoff_error(self, exc: Exception) -> None:
-        self.set_busy(False)
+        self._stop_progress()
         self._set_handoff_controls(True)
         if isinstance(exc, MarketInferenceError) and not self.data.market:
             self.log.info("Market could not be inferred; prompting for it", exc_info=exc)
@@ -523,8 +593,6 @@ class HostedPlayersReportApp(Screens, tk.Tk):
     def _set_handoff_controls(self, enabled: bool) -> None:
         for button in self._handoff_buttons:
             button.set_enabled(enabled)
-        if self._options_toggle is not None:
-            self._options_toggle.state(["!disabled" if enabled else "disabled"])
 
     def _copy_again(self) -> None:
         if not self.data.missing_uids:
@@ -536,7 +604,7 @@ class HostedPlayersReportApp(Screens, tk.Tk):
     def _browse_reactivated(self) -> None:
         path = filedialog.askopenfilename(
             title=text.REACTIVATED_DIALOG,
-            filetypes=[("CSV files", "*.csv"), ("All files", "*.*")],
+            filetypes=[(text.CSV_FILES_LABEL, "*.csv"), (text.ALL_FILES_LABEL, "*.*")],
             initialdir=self._settings["last_reactivated_dir"] or None,
         )
         if path:
@@ -546,10 +614,10 @@ class HostedPlayersReportApp(Screens, tk.Tk):
 
     def _choose_reactivated(self, path: Path) -> None:
         if not path.exists():
-            messagebox.showwarning(APP_TITLE, f"File not found:\n{path}")
+            messagebox.showwarning(APP_TITLE, text.file_not_found(path))
             return
         if path.suffix.lower() != ".csv":
-            messagebox.showwarning(APP_TITLE, f"Expected a .csv file, got:\n{path.name}")
+            messagebox.showwarning(APP_TITLE, text.wrong_file_extension(path))
             return
         try:
             read_reactivated_players_csv(path)
@@ -561,16 +629,17 @@ class HostedPlayersReportApp(Screens, tk.Tk):
         self.render_build()
 
     def _start_build(self) -> None:
-        create_native_pivot = self.native_pivot_var.get()
+        include_copy_sheet = self.qa_var.get()
         self._persist_settings()
         self.log.info(
             "Starting report build | market=%s | report_date=%s | reactivated_csv=%s | "
-            "output_folder=%s | native_pivot=%s",
+            "output_folder=%s | native_pivot=%s | qa=%s",
             self.data.market,
             self.data.report_date,
             self.data.reactivated_csv.name if self.data.reactivated_csv else None,
             self.data.output_folder,
-            create_native_pivot,
+            True,
+            include_copy_sheet,
         )
 
         hosted_path = self.data.hosted_path
@@ -593,8 +662,9 @@ class HostedPlayersReportApp(Screens, tk.Tk):
                 theme_path=self.theme_path,
                 reactivated_csv_path=self.data.reactivated_csv,
                 overwrite=True,
-                create_native_pivot=create_native_pivot,
+                create_native_pivot=True,
                 require_native_pivot=False,
+                include_copy_sheet=include_copy_sheet,
                 progress_callback=progress_callback,
             ),
             on_success=self._build_done,
@@ -607,7 +677,7 @@ class HostedPlayersReportApp(Screens, tk.Tk):
         self.finish_progress(self.render_done)
 
     def _build_error(self, exc: Exception) -> None:
-        self.set_busy(False)
+        self._stop_progress()
         if isinstance(exc, WorkbookLockedError):
             self.log.info(
                 "Workbook locked (attempt %s); offering retry",
@@ -647,6 +717,7 @@ class HostedPlayersReportApp(Screens, tk.Tk):
     def _start_over(self) -> None:
         self.hosted_var.set("")
         self.lastweek_var.set("")
+        self._file_chips_gradient = False
 
         self.data.hosted_path = None
         self.data.lastweek_path = None
@@ -655,7 +726,6 @@ class HostedPlayersReportApp(Screens, tk.Tk):
         self.data.missing_prior_row_count = 0
         self.data.distinct_missing_uid_count = 0
         self.data.clipboard_ok = False
-        self.data.clipboard_message = ""
         self.data.reactivated_csv = None
         self.data.result = None
         self.data.build_attempts = 0

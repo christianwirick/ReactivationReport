@@ -33,7 +33,6 @@ class GuiState:
     missing_prior_row_count: int = 0
     distinct_missing_uid_count: int = 0
     clipboard_ok: bool = False
-    clipboard_message: str = ""
     reactivated_csv: Path | None = None
     result: ReportResult | None = None
     build_attempts: int = 0

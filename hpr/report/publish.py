@@ -106,6 +106,7 @@ def reconcile_report(
     hosted_rows: Sequence[Mapping[str, object]],
     reactivated_rows: Sequence[Mapping[str, object]] | None,
     comparison: UidComparisonLike,
+    include_copy_sheet: bool,
 ) -> str:
     """Verify the workbook matches its source data."""
 
@@ -117,7 +118,8 @@ def reconcile_report(
 
     try:
         _reconcile_market_detail_count(workbook, market, hosted_rows)
-        _reconcile_copy_sheet_count(workbook, comparison)
+        if include_copy_sheet:
+            _reconcile_copy_sheet_count(workbook, comparison)
         _reconcile_summary_grand_total(workbook, hosted_rows)
         if reactivated_rows is not None:
             _reconcile_reactivated_property_codes(market, reactivated_rows)

@@ -4,15 +4,19 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sys
 import zipfile
 from datetime import UTC, datetime
 from pathlib import Path
 
-from hpr._version import __version__
-
 APP_NAME = "hosted-players-report"
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
+
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from hpr._version import __version__  # noqa: E402
 
 RUNTIME_FILES = {
     "setup_and_run_gui.bat",
