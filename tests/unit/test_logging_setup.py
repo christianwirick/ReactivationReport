@@ -29,10 +29,14 @@ class LoggingSetupTests(unittest.TestCase):
             first = configure_logging(log_dir=Path(temp), force=True)
             second = configure_logging(log_dir=Path(temp))
 
-        self.assertIs(second, first)
-        self.assertIs(second.logger, first.logger)
-        self.assertEqual(second.run_id, first.run_id)
-        self.assertEqual(len(second.logger.handlers), 1)
+            self.assertIs(second, first)
+            self.assertIs(second.logger, first.logger)
+            self.assertEqual(second.run_id, first.run_id)
+            self.assertEqual(len(second.logger.handlers), 1)
+
+            for handler in list(second.logger.handlers):
+                second.logger.removeHandler(handler)
+                handler.close()
 
 
 if __name__ == "__main__":

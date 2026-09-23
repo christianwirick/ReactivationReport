@@ -3,11 +3,13 @@
 A Windows desktop application for building hosted-player reactivation reports from Tableau exports and Excel workbooks.
 
 <p>
+  <a href="https://github.com/christianwirick/ReactivationReport/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/christianwirick/ReactivationReport/actions/workflows/ci.yml/badge.svg"></a>
   <a href="https://github.com/christianwirick/ReactivationReport/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/christianwirick/ReactivationReport?style=flat-square&label=release&color=7E46D8"></a>
   <img alt="Windows" src="https://img.shields.io/badge/platform-Windows-0078D4?style=flat-square&logo=windows11&logoColor=white">
   <img alt="Python 3.11+" src="https://img.shields.io/badge/python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white">
   <img alt="Excel" src="https://img.shields.io/badge/output-Excel-217346?style=flat-square&logo=microsoftexcel&logoColor=white">
   <img alt="Tableau workflow" src="https://img.shields.io/badge/workflow-Tableau-E97627?style=flat-square">
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-Proprietary-red?style=flat-square"></a>
 </p>
 
 Reactivation Report compares this week's hosted-player export with the previous workbook, identifies players who need a reactivation lookup, guides the Tableau handoff, and builds a validated Excel report.
@@ -152,3 +154,10 @@ See all options:
 ## Releases
 
 See [all releases](https://github.com/christianwirick/ReactivationReport/releases) for version history, downloadable ZIPs, manifests, checksums, and release notes.
+
+
+## License
+
+Copyright © 2026 Christian Wirick. All rights reserved.
+
+This repository is publicly viewable for reference, evaluation, and portfolio purposes only. **No permission is granted to use, copy, modify, distribute, commercialize, or create derivative works from the source code.** See [LICENSE](LICENSE) for the full terms.
