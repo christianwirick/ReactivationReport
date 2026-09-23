@@ -87,6 +87,10 @@ class CliTests(unittest.TestCase):
 
             log_text = (log_dir / "app.log").read_text(encoding="utf-8")
 
+            for handler in list(log_session.logger.handlers):
+                log_session.logger.removeHandler(handler)
+                handler.close()
+
         self.assertEqual(exit_code, 1)
         self.assertIn("ERROR: Unexpected failure", stderr.getvalue())
         self.assertIn("RuntimeError: boom", log_text)
