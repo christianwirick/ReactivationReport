@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="842" height="466" viewBox="0 0 842 466">
+<rect width="842" height="466" fill="#1C1A31"/>
+<style>
+.t{font-family:Segoe UI,Arial,sans-serif;fill:#EDEEF0}.m{font-family:Segoe UI,Arial,sans-serif;fill:#A7A9B4}.b{font-family:Segoe UI,Arial,sans-serif;font-weight:700;fill:#EDEEF0}
+</style>
+<rect x="20" y="18" width="802" height="65" rx="10" fill="#262340" stroke="#3A3556"/>
+<text x="42" y="58" class="b" font-size="20" fill="#00A892">✓  247 UIDs copied to your clipboard</text>
+<rect x="20" y="100" width="802" height="252" rx="10" fill="#262340" stroke="#3A3556"/>
+<circle cx="59" cy="143" r="20" fill="#7E46D8"/><text x="59" y="150" text-anchor="middle" class="b" font-size="17">1</text><text x="100" y="149" class="b" font-size="17">Paste them into Tableau.</text>
+<circle cx="59" cy="215" r="20" fill="#7E46D8"/><text x="59" y="222" text-anchor="middle" class="b" font-size="17">2</text><text x="100" y="221" class="b" font-size="17">Download the CSV.</text>
+<circle cx="59" cy="287" r="20" fill="#7E46D8"/><text x="59" y="294" text-anchor="middle" class="b" font-size="17">3</text><text x="100" y="293" class="b" font-size="17">Return here and continue.</text>
+<line x1="615" y1="120" x2="615" y2="332" stroke="#3A3556"/>
+<rect x="648" y="190" width="142" height="52" rx="8" fill="#262340" stroke="#3A3556"/><text x="719" y="222" text-anchor="middle" class="b" font-size="14">Copy UIDs</text>
+<rect x="20" y="383" width="115" height="50" rx="8" fill="#262340" stroke="#3A3556"/><text x="77" y="414" text-anchor="middle" class="b" font-size="14">←  Back</text>
+<rect x="662" y="383" width="160" height="50" rx="8" fill="#7E46D8"/><text x="742" y="414" text-anchor="middle" class="b" font-size="14">Continue  →</text>
+</svg>
