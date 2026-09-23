@@ -28,32 +28,42 @@ The release page includes the Windows ZIP, SHA256 checksum, and manifest.
 
 ## Application workflow
 
+These screens reflect the current Windows GUI.
+
 <table>
   <tr>
     <td width="50%">
       <strong>1. Add files</strong><br>
-      Select the current 90 day play report and last week's finished workbook.<br><br>
+      Select the current 90 day play report and last week's finished workbook, then continue.<br><br>
       <img src="docs/screenshots/step-1-add-files.svg" alt="Step 1 - Add files" width="100%">
     </td>
     <td width="50%">
       <strong>2. Get reactivated players</strong><br>
-      Missing UIDs are copied for the Tableau lookup workflow.<br><br>
-      <img src="docs/screenshots/step-2-tableau-handoff.svg" alt="Step 2 - Tableau handoff" width="100%">
+      The missing UIDs are copied to the clipboard for the Tableau lookup workflow.<br><br>
+      <img src="docs/screenshots/step-2-tableau-handoff.svg" alt="Step 2 - UIDs copied to clipboard" width="100%">
     </td>
   </tr>
   <tr>
     <td width="50%">
-      <strong>3. Add the Tableau export</strong><br>
+      <strong>3. Select the Tableau export</strong><br>
       Use the latest Re-Engagement CSV from Downloads or choose another file.<br><br>
       <img src="docs/screenshots/step-3-select-export.svg" alt="Step 3 - Select Tableau export" width="100%">
     </td>
     <td width="50%">
-      <strong>4. Complete the report</strong><br>
-      Build, validate, and open the finished Excel workbook.<br><br>
-      <img src="docs/screenshots/step-4-complete.svg" alt="Step 4 - Complete report" width="100%">
+      <strong>4. Build the report</strong><br>
+      The app shows live progress while it creates and validates the workbook and PivotTables.<br><br>
+      <img src="docs/screenshots/step-4-building.svg" alt="Step 4 - Building the report" width="100%">
     </td>
   </tr>
 </table>
+
+### Completed report
+
+After validation succeeds, the final screen shows the workbook name, market, reactivated-player count, QA report access, and the **Open workbook** action.
+
+<p align="center">
+  <img src="docs/screenshots/step-4-complete.svg" alt="Step 4 - Report completed successfully" width="78%">
+</p>
 
 ## Features
 
@@ -106,7 +116,7 @@ Return to the application and use the most recent Re-Engagement CSV from Downloa
 
 ### Step 4 — Build and open
 
-The application builds and validates the workbook, then lets you open the finished report.
+The application shows progress while it builds the workbook, creates PivotTables, validates the output, and publishes the finished report. When complete, the success screen shows the final workbook name, market, and reactivated-player count, with actions to review QA details or open the workbook.
 
 ```text
 <Market> - Hosted Players Report MM.DD.YY.xlsx

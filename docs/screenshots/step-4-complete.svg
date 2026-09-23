@@ -1,15 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="842" height="466" viewBox="0 0 842 466">
-<rect width="842" height="466" fill="#1C1A31"/>
-<style>
-.t{font-family:Segoe UI,Arial,sans-serif;fill:#EDEEF0}.m{font-family:Segoe UI,Arial,sans-serif;fill:#A7A9B4}.b{font-family:Segoe UI,Arial,sans-serif;font-weight:700;fill:#EDEEF0}
-</style>
-<defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#7E46D8"/><stop offset=".55" stop-color="#0093B8"/><stop offset="1" stop-color="#00A892"/></linearGradient></defs>
-<rect x="20" y="18" width="802" height="80" rx="10" fill="url(#g)"/><text x="45" y="68" class="b" font-size="24" fill="#fff">✓  Success</text>
-<rect x="20" y="116" width="802" height="214" rx="10" fill="#262340" stroke="#3A3556"/>
-<text x="42" y="173" class="m" font-size="15">Final workbook</text><text x="790" y="173" text-anchor="end" class="t" font-size="15">St. Louis - Hosted Players Report 09.23.26.xlsx</text><line x1="42" y1="193" x2="800" y2="193" stroke="#3A3556"/>
-<text x="42" y="237" class="m" font-size="15">Market</text><text x="790" y="237" text-anchor="end" class="t" font-size="15">St. Louis</text><line x1="42" y1="257" x2="800" y2="257" stroke="#3A3556"/>
-<text x="42" y="301" class="m" font-size="15">Reactivated players</text><text x="790" y="301" text-anchor="end" class="t" font-size="15">18</text>
-<rect x="20" y="361" width="54" height="52" rx="8" fill="#262340" stroke="#3A3556"/><text x="47" y="394" text-anchor="middle" class="b" font-size="20">↶</text>
-<rect x="558" y="361" width="115" height="52" rx="8" fill="#262340" stroke="#3A3556"/><text x="615" y="393" text-anchor="middle" class="b" font-size="14">QA report</text>
-<rect x="688" y="361" width="134" height="52" rx="8" fill="#7E46D8"/><text x="755" y="393" text-anchor="middle" class="b" font-size="14">Open workbook</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="849" height="590" viewBox="0 0 849 590">
+<style>.t{font-family:Segoe UI,Arial,sans-serif}.w{fill:#fff}.dark{fill:#17162c}.card{fill:#282442}.muted{fill:#a9acb7}.head{fill:#aeb1bb}.ink{fill:#16092b}.purple{fill:#7d43df}.teal{fill:#08b7a7}</style>
+<defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#28103e"/><stop offset=".25" stop-color="#8645df"/><stop offset=".64" stop-color="#268cc6"/><stop offset="1" stop-color="#05af9f"/></linearGradient></defs>
+<rect width="849" height="590" class="dark"/><rect width="849" height="112" class="head"/>
+<g transform="translate(25,32)" fill="none" stroke="#08a8cf" stroke-width="2"><circle cx="28" cy="27" r="19"/><path d="M10 42L28 7l18 35M6 27h44M14 12l28 30M42 12L14 42"/></g>
+<text x="101" y="59" class="t ink" font-size="36" font-weight="700">Hosted Players Report</text><text x="100" y="91" class="t ink" font-size="16">Step 4 of 4</text>
+<circle cx="208" cy="85" r="4" fill="#7d43df"/><circle cx="226" cy="85" r="4" fill="#7d43df"/><circle cx="244" cy="85" r="4" fill="#7d43df"/><rect x="257" y="81" width="28" height="8" rx="4" fill="#7d43df"/>
+<rect x="19" y="134" width="804" height="84" rx="16" fill="url(#g)"/><text x="42" y="187" class="t teal" font-size="28" font-weight="700">✓  Success</text>
+<rect x="20" y="235" width="803" height="168" rx="6" class="card" stroke="#433b62"/>
+<text x="38" y="268" class="t muted" font-size="18">Final workbook</text><text x="806" y="268" text-anchor="end" class="t w" font-size="18">St. Louis - Hosted Players Report 09.23.26.xlsx</text><line x1="38" y1="290" x2="805" y2="290" stroke="#433b62"/>
+<text x="38" y="325" class="t muted" font-size="18">Market</text><text x="806" y="325" text-anchor="end" class="t w" font-size="18">St. Louis</text><line x1="38" y1="347" x2="805" y2="347" stroke="#433b62"/>
+<text x="38" y="382" class="t muted" font-size="18">Reactivated players</text><text x="806" y="382" text-anchor="end" class="t w" font-size="18">186</text>
+<rect x="20" y="430" width="47" height="47" rx="6" fill="#282442" stroke="#433b62"/><text x="43" y="461" text-anchor="middle" class="t w" font-size="28">←</text>
+<rect x="485" y="428" width="134" height="51" rx="7" fill="#24203e"/><text x="552" y="460" text-anchor="middle" class="t w" font-size="18" font-weight="700">QA report</text>
+<rect x="630" y="428" width="193" height="51" rx="7" class="purple"/><text x="726" y="460" text-anchor="middle" class="t w" font-size="18" font-weight="700">Open workbook</text>
 </svg>

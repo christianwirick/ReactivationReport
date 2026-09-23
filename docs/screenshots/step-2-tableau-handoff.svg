@@ -1,16 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="842" height="466" viewBox="0 0 842 466">
-<rect width="842" height="466" fill="#1C1A31"/>
-<style>
-.t{font-family:Segoe UI,Arial,sans-serif;fill:#EDEEF0}.m{font-family:Segoe UI,Arial,sans-serif;fill:#A7A9B4}.b{font-family:Segoe UI,Arial,sans-serif;font-weight:700;fill:#EDEEF0}
-</style>
-<rect x="20" y="18" width="802" height="65" rx="10" fill="#262340" stroke="#3A3556"/>
-<text x="42" y="58" class="b" font-size="20" fill="#00A892">✓  247 UIDs copied to your clipboard</text>
-<rect x="20" y="100" width="802" height="252" rx="10" fill="#262340" stroke="#3A3556"/>
-<circle cx="59" cy="143" r="20" fill="#7E46D8"/><text x="59" y="150" text-anchor="middle" class="b" font-size="17">1</text><text x="100" y="149" class="b" font-size="17">Paste them into Tableau.</text>
-<circle cx="59" cy="215" r="20" fill="#7E46D8"/><text x="59" y="222" text-anchor="middle" class="b" font-size="17">2</text><text x="100" y="221" class="b" font-size="17">Download the CSV.</text>
-<circle cx="59" cy="287" r="20" fill="#7E46D8"/><text x="59" y="294" text-anchor="middle" class="b" font-size="17">3</text><text x="100" y="293" class="b" font-size="17">Return here and continue.</text>
-<line x1="615" y1="120" x2="615" y2="332" stroke="#3A3556"/>
-<rect x="648" y="190" width="142" height="52" rx="8" fill="#262340" stroke="#3A3556"/><text x="719" y="222" text-anchor="middle" class="b" font-size="14">Copy UIDs</text>
-<rect x="20" y="383" width="115" height="50" rx="8" fill="#262340" stroke="#3A3556"/><text x="77" y="414" text-anchor="middle" class="b" font-size="14">←  Back</text>
-<rect x="662" y="383" width="160" height="50" rx="8" fill="#7E46D8"/><text x="742" y="414" text-anchor="middle" class="b" font-size="14">Continue  →</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="849" height="590" viewBox="0 0 849 590">
+<style>.t{font-family:Segoe UI,Arial,sans-serif}.w{fill:#fff}.dark{fill:#17162c}.card{fill:#282442}.muted{fill:#a9acb7}.head{fill:#aeb1bb}.ink{fill:#16092b}.purple{fill:#7d43df}.teal{fill:#08b7a7}</style>
+<rect width="849" height="590" class="dark"/><rect width="849" height="112" class="head"/>
+<g transform="translate(25,32)" fill="none" stroke="#08a8cf" stroke-width="2"><circle cx="28" cy="27" r="19"/><path d="M10 42L28 7l18 35M6 27h44M14 12l28 30M42 12L14 42"/></g>
+<text x="101" y="59" class="t ink" font-size="36" font-weight="700">Hosted Players Report</text><text x="100" y="91" class="t ink" font-size="16">Step 2 of 4</text>
+<circle cx="208" cy="85" r="4" fill="#7d43df"/><rect x="221" y="81" width="28" height="8" rx="4" fill="#7d43df"/><circle cx="258" cy="85" r="4" fill="#606172"/><circle cx="276" cy="85" r="4" fill="#606172"/>
+<rect x="22" y="133" width="804" height="68" rx="12" class="card"/><text x="44" y="179" class="t teal" font-size="28" font-weight="700">✓  219 UIDs copied to your clipboard</text>
+<rect x="23" y="218" width="803" height="155" rx="6" class="card" stroke="#433b62"/>
+<circle cx="58" cy="251" r="16" class="purple"/><text x="58" y="258" text-anchor="middle" class="t w" font-size="17" font-weight="700">1</text><text x="88" y="257" class="t w" font-size="19" font-weight="700">Paste them into Tableau.</text>
+<circle cx="58" cy="295" r="16" class="purple"/><text x="58" y="302" text-anchor="middle" class="t w" font-size="17" font-weight="700">2</text><text x="88" y="301" class="t w" font-size="19" font-weight="700">Download the CSV.</text>
+<circle cx="58" cy="339" r="16" class="purple"/><text x="58" y="346" text-anchor="middle" class="t w" font-size="17" font-weight="700">3</text><text x="88" y="345" class="t w" font-size="19" font-weight="700">Return here and continue.</text>
+<line x1="642" y1="237" x2="642" y2="354" stroke="#413959"/>
+<rect x="667" y="270" width="139" height="51" rx="7" fill="#282442" stroke="#443b61"/><text x="737" y="302" text-anchor="middle" class="t w" font-size="18" font-weight="700">Copy UIDs</text>
+<rect x="23" y="394" width="110" height="51" rx="6" fill="#24203e"/><text x="45" y="425" class="t w" font-size="19" font-weight="700">←  Back</text>
+<rect x="679" y="394" width="147" height="51" rx="7" class="purple"/><text x="753" y="425" text-anchor="middle" class="t w" font-size="19" font-weight="700">Continue  →</text>
 </svg>

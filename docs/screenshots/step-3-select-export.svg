@@ -1,13 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="842" height="466" viewBox="0 0 842 466">
-<rect width="842" height="466" fill="#1C1A31"/>
-<style>
-.t{font-family:Segoe UI,Arial,sans-serif;fill:#EDEEF0}.m{font-family:Segoe UI,Arial,sans-serif;fill:#A7A9B4}.b{font-family:Segoe UI,Arial,sans-serif;font-weight:700;fill:#EDEEF0}
-</style>
-<text x="20" y="55" class="b" font-size="25">Select Tableau export</text>
-<rect x="20" y="76" width="802" height="232" rx="10" fill="#262340" stroke="#3A3556"/>
-<text x="45" y="119" class="b" font-size="18">Re-Engagement.csv</text><text x="45" y="151" class="m" font-size="15">Downloads · today at 10:42 AM</text>
-<rect x="45" y="207" width="153" height="51" rx="8" fill="#7E46D8"/><text x="121" y="239" text-anchor="middle" class="b" font-size="15">Select</text>
-<rect x="214" y="207" width="56" height="51" rx="8" fill="#262340" stroke="#3A3556"/><path d="M231 225h9l3 4h10v12h-22z" fill="none" stroke="#EDEEF0" stroke-width="2"/>
-<text x="45" y="287" class="m" font-size="14">Use the most recent Reactivated Players CSV or choose another file.</text>
-<rect x="20" y="352" width="115" height="50" rx="8" fill="#262340" stroke="#3A3556"/><text x="77" y="383" text-anchor="middle" class="b" font-size="14">←  Back</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="849" height="590" viewBox="0 0 849 590">
+<style>.t{font-family:Segoe UI,Arial,sans-serif}.w{fill:#fff}.dark{fill:#17162c}.card{fill:#282442}.muted{fill:#a9acb7}.head{fill:#aeb1bb}.ink{fill:#16092b}.purple{fill:#7d43df}</style>
+<rect width="849" height="590" class="dark"/><rect width="849" height="112" class="head"/>
+<g transform="translate(25,32)" fill="none" stroke="#08a8cf" stroke-width="2"><circle cx="28" cy="27" r="19"/><path d="M10 42L28 7l18 35M6 27h44M14 12l28 30M42 12L14 42"/></g>
+<text x="101" y="59" class="t ink" font-size="36" font-weight="700">Hosted Players Report</text><text x="100" y="91" class="t ink" font-size="16">Step 3 of 4</text>
+<circle cx="208" cy="85" r="4" fill="#7d43df"/><circle cx="226" cy="85" r="4" fill="#7d43df"/><rect x="242" y="81" width="28" height="8" rx="4" fill="#7d43df"/><circle cx="278" cy="85" r="4" fill="#606172"/>
+<text x="26" y="166" class="t w" font-size="27" font-weight="600">Select Tableau export</text>
+<rect x="25" y="189" width="803" height="177" rx="6" class="card" stroke="#433b62"/>
+<text x="46" y="231" class="t w" font-size="19" font-weight="700">Re-Engagement (7).csv</text><text x="46" y="264" class="t muted" font-size="19">Downloads · today at 11:10 AM</text>
+<rect x="45" y="295" width="149" height="51" rx="6" class="purple"/><text x="119" y="327" text-anchor="middle" class="t w" font-size="18" font-weight="700">Select</text>
+<rect x="204" y="301" width="49" height="40" rx="5" fill="#282442" stroke="#4b4364"/><path d="M215 315h9l3 4h13v10h-25z" fill="none" stroke="#fff" stroke-width="2"/>
+<rect x="25" y="383" width="110" height="51" rx="6" fill="#24203e"/><text x="47" y="414" class="t w" font-size="19" font-weight="700">←  Back</text>
 </svg>
