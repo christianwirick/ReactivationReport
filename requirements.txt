@@ -1,2 +1,1 @@
-openpyxl==3.1.5
-pywin32==306; platform_system=="Windows"
+openpyxl==3.1.5\npywin32==311; platform_system=="Windows"\n
